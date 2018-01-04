@@ -14,10 +14,12 @@ if [[ -f "$PREFIX/$passfile" ]]; then
     cd "$PREFIX/"$(dirname "$targetPath")""
     if [[ -f "$PREFIX/$targetfile" ]]; then
         die "Error: $targetPath already exists"
+    elif [[ -z $targetPath ]]; then
+        die "Error: Target path is missing"
     fi
     ln -s "$parent_path$passfile" "$symFile" || exit $?
 elif [[ -z $sourcePath ]]; then
-    die ""
+    die "Error: Source path is missing"
 else
     die "Error: $sourcePath is not in the password store."
 fi
