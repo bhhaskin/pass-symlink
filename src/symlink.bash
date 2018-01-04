@@ -2,7 +2,8 @@
 
 local sourcePath="$1"
 local targetPath="$2"
-check_sneaky_paths "$sourcePath" "$targetPath"
+local targetDirectory="$PREFIX/"$(dirname "$targetPath")""
+check_sneaky_paths "$sourcePath" "$targetPath" "$targetDirectory"
 
 local passfile="$sourcePath.gpg"
 local targetfile="$targetPath.gpg"
@@ -11,7 +12,10 @@ local parent_path=$(echo "$targetfile" | sed -e "s|[^/]||g" -e "s|/|../|g")
 
 
 if [[ -f "$PREFIX/$passfile" ]]; then
-    cd "$PREFIX/"$(dirname "$targetPath")""
+    if [[ ! -d $targetDirectory ]]; then
+        mkdir -p "$targetDirectory"
+    fi
+    cd "$targetDirectory"
     if [[ -f "$PREFIX/$targetfile" ]]; then
         die "Error: $targetPath already exists"
     elif [[ -z $targetPath ]]; then
