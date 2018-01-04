@@ -22,6 +22,9 @@ if [[ -f "$PREFIX/$passfile" ]]; then
         die "Error: Target path is missing"
     fi
     ln -s "$parent_path$passfile" "$symFile" || exit $?
+    if [[ -d "$PREFIX/.git" ]]; then
+        git add . && git commit -am "Created symlink of \"$sourcePath\" as \"$targetPath\""
+    fi
 elif [[ -z $sourcePath ]]; then
     die "Error: Source path is missing"
 else
