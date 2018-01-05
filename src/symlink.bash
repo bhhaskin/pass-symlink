@@ -23,7 +23,7 @@ if [[ -f "$PREFIX/$passfile" ]]; then
     fi
     ln -s "$parent_path$passfile" "$symFile" || exit $?
     if [[ -d "$PREFIX/.git" ]]; then
-        git add . --quiet && git commit -am "Created symlink of \"$sourcePath\" as \"$targetPath\"" --quiet
+        git add . && git commit -am "Created symlink of \"$sourcePath\" as \"$targetPath\"" --quiet
     fi
 elif [[ -z $sourcePath ]]; then
     die "Error: Source path is missing"
